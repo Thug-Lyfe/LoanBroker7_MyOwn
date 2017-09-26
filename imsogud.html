@@ -1,0 +1,55 @@
+<html>
+  <head>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<style>
+    #ssn:valid, #loanAmount:valid, #loanDuration:valid {
+    color: green;
+}
+#ssn:invalid, #loanAmount:invalid, #loanDuration:invalid {
+    color: red;
+}
+  
+</style>
+<script>
+    angular.module('inputExample', [])
+      .controller('ExampleController', ['$scope', function($scope) {
+        $scope.loan = {ssn: 'ddmmyy-xxxx', loanAmount: 1000,LoanDuration:new Date()};
+
+
+      }]);
+      
+
+
+
+
+ </script>
+
+ </head>
+ <body>
+ <div ng-controller="ExampleController">
+  <form id="form" action='/request' method='post'>
+     <label>
+        CPR:
+        <input  title="Please Enter in the format 123456-1234" required placeholder="Enter SSN" pattern="\d{6}-?\d{4}" minlength="11" maxlength="11" type="text" name="ssn" id="ssn">
+       
+     </label>
+     <br>
+     <label>
+        loan amount:
+        <input min="1" type="number" name="loanAmount" id="loanAmount" ng-model="loan.loanAmount" required >
+     </label>
+<br>
+     <label>
+      loan expiration date:
+      <input type="date" name="loanDuration" id="loanDuration" required >
+   </label>
+   <input type="submit" value="Find" >
+     </form>
+     
+ </div>
+
+<button id="formTest" ng-click="formTest">test</button>
+ 
+</body>
+ </html>
