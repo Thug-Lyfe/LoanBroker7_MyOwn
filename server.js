@@ -16,7 +16,7 @@ var log_Credit = [];
 var log_bank = [];
     
 app.get('/', function(req, res){
-    res.sendFile(__dirname + '\\imsogud.html');
+    res.sendFile(__dirname + '/imsogud.html');
 })
 
 app.get('/getCreditLog', function(req, res){
