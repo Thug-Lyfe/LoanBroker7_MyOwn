@@ -1,7 +1,7 @@
 <html>
   <head>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 <style>
     #ssn:valid, #loanAmount:valid, #loanDuration:valid {
     color: green;
@@ -11,23 +11,13 @@
 }
   
 </style>
-<script>
-    angular.module('inputExample', [])
-      .controller('ExampleController', ['$scope', function($scope) {
-        $scope.loan = {ssn: 'ddmmyy-xxxx', loanAmount: 1000,LoanDuration:new Date()};
 
-
-      }]);
-      
-
-
-
-
- </script>
 
  </head>
  <body>
- <div ng-controller="ExampleController">
+    
+    <div>
+    
   <form id="form" action='/request' method='post'>
      <label>
         CPR:
@@ -37,7 +27,7 @@
      <br>
      <label>
         loan amount:
-        <input min="1" type="number" name="loanAmount" id="loanAmount" ng-model="loan.loanAmount" required >
+        <input min="1" type="number" name="loanAmount" id="loanAmount" required >
      </label>
 <br>
      <label>
@@ -49,7 +39,28 @@
      
  </div>
 
-<button id="formTest" ng-click="formTest">test</button>
- 
+<button id="formTest" >update</button>
+<div >
+<div style="width:33%;height:50%" name="getcreditarea" id="getcreditarea"></div>
+<textarea style="width:33%;height:50%" editable name="getrulearea" id="getrulearea" cols="30" rows="10"></textarea>
+<textarea style="width:33%;height:50%" editable name="getbankarea" id="getbankarea" cols="30" rows="10"></textarea>
+
+</div>
 </body>
+<script>
+    
+    
+$('#formTest').click(function(){
+    console.log("test")
+    $.get( 'http://localhost:3333/getCreditLog', function( data ) {
+    var log = "";
+    JSON.parse(data)
+        $( "#getcreditarea" ).innerHTML = data;
+    });
+    $.get( 'http://localhost:3333/getBankLog', function( data ) {
+    $( "#getbankarea" ).val(data)
+    });
+});
+        
+    </script>
  </html>

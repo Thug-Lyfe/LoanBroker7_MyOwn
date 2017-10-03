@@ -12,16 +12,24 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+var log_Credit = [];
+var log_bank = [];
+    
 app.get('/', function(req, res){
     res.sendFile(__dirname + '\\imsogud.html');
 })
 
+app.get('/getCreditLog', function(req, res){
+  res.send(log_Credit)  
+})
+app.get('/getBankLog', function(req, res){
+    res.send(log_bank)  
+  })
+  
+
 //Database VM with IP 192.168.20.3
 
 
-app.get('/', function(req, res){
-    res.sendFile(__dirname + '\\routes\\imsogud.html');
-});
 
 app.post('/request', function(req, res){
     console.log(req.body);
@@ -36,6 +44,42 @@ app.post('/request', function(req, res){
             console.log(" [x] Send request to credit score");
         });
         setTimeout(function(){ conn.close();}, 500);
+        
+        conn.createChannel(function (err, ch) {
+            var q = 'creditLogQueue';
+            ch.assertQueue(q, {
+                durable: false
+            });
+    
+            console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", q);
+            log_Credit.push("Log initiated showing Credit log:")
+            ch.consume(q, function (msg) {
+                console.log(" [x] Received %s", msg.content.toString());
+                log_Credit.push("Received: " + msg.content);
+                
+            }, {
+                noAck: true
+            });
+    
+        });
+        conn.createChannel(function (err, ch) {
+            var q = 'bankLogQueue';
+            ch.assertQueue(q, {
+                durable: false
+            });
+    
+            console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", q);
+            log_bank.push("Log initiated showing Bank log:")
+            ch.consume(q, function (msg) {
+                console.log(" [x] Received %s", msg.content.toString());
+                log_bank.push("Received: " + msg.content);
+                
+            }, {
+                noAck: true
+            });
+    
+        });
+
     });
 
     res.redirect('/');

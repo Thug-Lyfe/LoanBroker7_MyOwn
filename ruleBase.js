@@ -31,3 +31,4 @@ var server = app.listen(3031,function(){
     var port = server.address().port;
 });
 soap.listen(server,'/getbanks',service,xml);
+
