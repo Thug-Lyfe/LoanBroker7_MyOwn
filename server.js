@@ -86,7 +86,7 @@ app.post('/request', function(req, res){
 });
 
 var server = app.listen(3333, function(){
-    var host = 'localhost';
+    var host = 'http://37.139.5.194';
     var port = server.address().port;
     console.log("server running at http://%s:%s\n", host, port);
 });
