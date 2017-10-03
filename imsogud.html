@@ -54,7 +54,7 @@ $('#formTest').click(function(){
     console.log("test")
     $.get( 'http://37.139.5.194:3333/getCreditLog', function( data ) {
     var log = "";
-    JSON.parse(data)
+    
         $( "#getcreditarea" ).innerHTML = data;
     });
     $.get( 'http://37.139.5.194:3333/getBankLog', function( data ) {
